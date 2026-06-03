@@ -479,7 +479,7 @@ export function death2(bana1,bana2,bana3,ippebossbana1,ippebossbana2,död2): voi
     }
     
 }
-export function win(){// winst skärmen
+export function win(){// vinst skärmen
     vinstljudet.play();
     text('victory', W - W / 2 - 550, 400, 300, 'yellow')
     
