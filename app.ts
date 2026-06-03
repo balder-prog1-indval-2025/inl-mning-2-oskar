@@ -12,7 +12,7 @@ import {  randombred } from "./app2"
 import {  uppner } from "./app2"
 import {  x4} from "./app2"
 import {  char_y, char_x} from "./app2"
-import {  updateMovement,död1 } from "./app2"
+import {  updateMovement,död1, getDöd1,död2 } from "./app2"
 //app.ts har uppdaten och det som driver spelet
 
 let deathtimer = 0
@@ -20,21 +20,19 @@ let lukazmonster = await fetchImage ("lukaz.jpg")
 let coinvalue = 0
 
 
-let död2 = false
-let bana1 = true
-let bana2 = false
-let bana3 = false
-let ippebossbana1 = false
-let ippebossbana2 = false
-let winner =false
+
+
+
+let bana = 1
+
 update = () => {
-    console.log(död1)
+    getDöd1()
     if (död1){
-        death1(bana1,bana2,bana3,ippebossbana1)
-        console.log()
+        bana = death1(bana)
+        coinvalue = 0
     }else{
         clear()
-        if(bana1){
+        if(bana == 1){
             deathtimer = 0
             
             
@@ -44,8 +42,8 @@ update = () => {
             updateMovement()
             
             if( död1 == false){
-               lukazattack(död1)
-               marrekuben(2,W+x4,död1)
+               lukazattack()
+               marrekuben(2,W+x4)
                 
             }
             
@@ -69,7 +67,7 @@ update = () => {
             if(coinvalue == 3){
                 
                 coinvalue = 4
-                bana2 = true
+                bana = 2 
                 
          
          
@@ -77,9 +75,9 @@ update = () => {
         
         
     }
-    if(bana2){
+    if(bana == 2){
         
-        bana1=false
+    
         
         ctx.drawImage(lukazmonster, W-randombred,H-H-200+uppner,100,200)
         
@@ -87,8 +85,8 @@ update = () => {
         updateMovement()
         
         if( död1 == false){
-            lukazattack(död1)
-            marrekuben(4,W/2,död1)
+            lukazattack()
+            marrekuben(4,W/2)
             
         }
         
@@ -109,7 +107,7 @@ update = () => {
             coinvalue = coins3(W/6,H/4,coinvalue)
         }
         if(coinvalue == 3){
-            bana3 = true
+            bana = 3
             coinvalue = 4
         }
         if(coinvalue == 4){
@@ -119,19 +117,16 @@ update = () => {
         }
     }
     
-    if(bana3){
-           
-           bana2=false
-           
+    if(bana == 3){
            ctx.drawImage(lukazmonster, W-randombred,H-H-200+uppner,100,200)
            
            
            updateMovement()
            
             if( död1 == false){
-                lukazattack(död1)
+                lukazattack()
                 
-                marrekuben(10,W/2,död1)
+                marrekuben(10,W/2)
                 
             }
             
@@ -141,7 +136,7 @@ update = () => {
             
             lukazhb.y = uppner-200
             if(keyboard.l){
-                
+
        
        }
        if(coinvalue == 0){
@@ -156,7 +151,7 @@ update = () => {
      if(coinvalue == 3){
         reset()
         coinvalue = 4
-     ippebossbana1 = true
+             bana = 4
    
      
        
@@ -169,19 +164,19 @@ update = () => {
  
        }
     if (död2){
-        death2(bana1,bana2,bana3,ippebossbana1,ippebossbana2,död2)
+        bana = death2(bana) 
         
     }else{
  
-     if (ippebossbana1){
+     if (bana==4){
         
-        bana3=false
+        
         updateMovement()
         updatePosition()
         updateCharacter(char_x, char_y, hitbox)
-        if( död1 == false){
-            ippeboss1(ippebossbana2)
-            }
+        
+        bana = ippeboss1(bana)
+        
  
      }
 
@@ -189,21 +184,21 @@ update = () => {
      
      
      
-     if(ippebossbana2){
+     if(bana == 5){
          
-         ippebossbana1=false
+         
          updateMovement()
             updatePosition()
             updateCharacter(char_x, char_y, hitbox)
             if( död1 == false){
-                ippeboss(död2,winner)
+                ippeboss(bana)
             }
             
         }
         
         
-     if(winner){
-        ippebossbana2=false
+     if(bana == 6){
+        
         updateMovement()
            updatePosition()
            updateCharacter(char_x, char_y, hitbox)

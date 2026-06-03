@@ -8,6 +8,8 @@ let tid=0
 let tid2=0
 let x3 = 0
 export let död1 = false
+export 
+let död2 = false
 export let x4 = 0
 export let char_y = 400
 export let movement_x = 0
@@ -16,7 +18,7 @@ let jump_time = 0
 export let jumping = false
 export let hitbox = new Hitbox(char_x, char_y, 100, 100)
 let ippebosse = await fetchImage ("IPPEBOSS.jpg")
-let ippe = [ //ippe kbossens variabler 
+let ippe = [ //ippe bossens variabler 
     {
         "x": W/2,
         "y": 1,
@@ -48,7 +50,7 @@ let ippe = [ //ippe kbossens variabler
         "m": random(15,30)/10
     },
 ]
-let ippereset = [ //ippe bossens reserv kod
+let ippereset = [ //ippe bossens reset kod
     {
         "x": W/2,
         "y": 1,
@@ -106,7 +108,7 @@ let woman2 = [ // variablerna till sammma tjej
     
     
 ]
-let woman2reset = [// reserv variablerna till sammma tjej
+let woman2reset = [// reset variablerna till sammma tjej
     {
         "x": W,
         "y": H/2-H/17,
@@ -134,7 +136,6 @@ let coin = await fetchImage ("8cd3c27a96c00fe6a769ca850758a959.jpg")
 var boingljudet = new Audio('klasky-csupo-boing-sound-effect.mp3');
 
 export function getDöd1() {
-    console.log(död1)
     return död1
 }
 
@@ -192,7 +193,7 @@ export function updatePosition() {// en till function för rörelsen
 }
  
 let framme = false 
-export function lukazattack(död1: boolean){ // function som får huvudet med lazer att funka
+export function lukazattack(){ // function som får huvudet med lazer att funka
     if(uppner<201 && framme == false ){
         uppner+=1
         tid2=0
@@ -205,7 +206,6 @@ export function lukazattack(död1: boolean){ // function som får huvudet med la
         if(hitbox.intersects(lukazlazer)){
             
             död1 = true
-            console.log("död", död1)
         }
     }
     if (hitbox.intersects(lukazhb)) {
@@ -229,7 +229,7 @@ export function lukazattack(död1: boolean){ // function som får huvudet med la
     }
 }
 let vänster = true
-export async function marrekuben(speed: number,x2: number,död1: boolean){// function som får kuben med marvins ansikte att röra på sig åt höger och vänsster
+export async function marrekuben(speed: number,x2: number){// function som får kuben med marvins ansikte att röra på sig åt höger och vänsster
  
    
     let hitboxkub = new Hitbox(W-x4,H/2+H/17,100,100)
@@ -270,7 +270,7 @@ export async function marrekuben(speed: number,x2: number,död1: boolean){// fun
 
 
 let womanv = true
-export function woman(woman,död2){ // function som får tjejerna i ippe boss att röra sig
+export function woman(woman,){ // function som får tjejerna i ippe boss att röra sig
    let hitboxwoman = new Hitbox(woman.x,woman.y,75,200)
    hitboxwoman.x = woman.x
    hitboxwoman.y = woman.y
@@ -301,7 +301,7 @@ export function woman(woman,död2){ // function som får tjejerna i ippe boss at
     död2 = true
 }
 }
-export function woman9(woman,död2){// function som får tjejerna i ippe boss att röra sig 
+export function woman9(woman){// function som får tjejerna i ippe boss att röra sig 
     let hitboxwoman = new Hitbox(woman.x,woman.y,75,200)
     hitboxwoman.x = woman.x
     hitboxwoman.y = woman.y
@@ -349,26 +349,26 @@ export function reset(){// function som nollställer alla vairabler den dess fö
      lukazlazer.x =  W-randombred + 28
      ippe = ippereset
      woman2 = woman2reset
+     h=-150
+     marretimerx = 0
+     
      
  
  
 }
- export function ippeboss1(ippebossbana2){ // en dell av bossen med isak
+ export function ippeboss1(bana){ // en dell av bossen med isak
    
     ctx.drawImage(ippebosse, W/6,h,W-W/3,150)
     if(h<2){
     h+=1
     
     }
-    if(h==0){
-    ippebossbana2=true
-    }
-    if(h==1){
-        h=-150
-        }
+    if(h>0){
+    bana = 5
+       }   return bana
  }
  
-export function ippeboss(död2,winner){// en dell av bossen med isak
+export function ippeboss(bana: number){// en dell av bossen med isak
    
    
     let hitboxippe = new Hitbox(W/6,1,W-W/3,150)
@@ -378,29 +378,29 @@ export function ippeboss(död2,winner){// en dell av bossen med isak
     
    
     if(död2 == false){
-        ippetomat(ippe[0],död2)
-        ippetomat(ippe[1],död2)
-        ippetomat(ippe[2],död2)
-        ippetomat(ippe[3],död2)
-        ippetomat(ippe[4],död2)
-        woman(woman2[0],död2)
-        woman9(woman2[1],död2)
+        ippetomat(ippe[0])
+        ippetomat(ippe[1])
+        ippetomat(ippe[2])
+        ippetomat(ippe[3])
+        ippetomat(ippe[4])
+        woman(woman2[0])
+        woman9(woman2[1])
         marretimerx+=1
         
     }
     if (marretimerx>2000){
-        marrekuben(2,W+x4,död2)
+        marrekuben(2,W+x4)
 
     }
     if (marretimerx>4500){
-        winner = true
+        bana = 6
 
     }
     ctx.drawImage(ippebosse, W/6,1,W-W/3,150)
    
 }
  
-export function ippetomat(ippe,död2){//  tomaterna från bossen med isak
+export function ippetomat(ippe,){//  tomaterna från bossen med isak
     ctx.drawImage(tomat, ippe.x,ippe.y,25,25)
 if (ippe.y>H){
         ippe.y = 1
@@ -448,36 +448,30 @@ export function coins3(x: number, y: number,coinvalue){// pengarna
 let lukazlazer = new Hitbox(W-randombred+28, 125,37,H)
 export let lukazhb = new Hitbox(W-randombred,H-H-200+uppner,100,200)
  
-export function death1(bana1,bana2,bana3,död1): void{ //döds skräm och reset
+export function death1(bana): number{ //döds skräm och reset
     rectangle(0,0,10000,10000)
     text('WASTED', W - W / 2 - 475, 400, 300, 'red')
     text('Press Enter to restart', W  - 375, H-30, 25, 'red')
     dödsljudet.play();
     if (keyboard.enter){
-
-        död1 = false
-        bana1 = true
-        bana2 = false
-        bana3 = false
+        bana = 1
         reset()
+        död1=false
     }
+    return bana
     
 }
-export function death2(bana1,bana2,bana3,ippebossbana1,ippebossbana2,död2): void{//döds skräm och reset och reset point
+export function death2(bana): number{//döds skräm och reset och reset point
     rectangle(0,0,10000,10000)
     text('WASTED', W - W / 2 - 475, 400, 300, 'red')
     text('Press Enter to restart', W  - 375, H-30, 25, 'red')
     dödsljudet.play();
     if (keyboard.enter){
-        bana1 = false
-        bana2 = false
-        bana3 = false
-        ippebossbana1 = true
-        ippebossbana2 = false
+        bana = 4
         reset()
-        död2 = false
+        död2=false
     }
-    
+    return bana
 }
 export function win(){// vinst skärmen
     vinstljudet.play();
