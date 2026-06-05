@@ -138,8 +138,11 @@ var boingljudet = new Audio('klasky-csupo-boing-sound-effect.mp3');
 export function getDöd1() {
     return död1
 }
-
-export function jump() {  // functionen för att hoppa;)
+/**functionen för att hoppa;)
+ * 
+ * @returns den returnerar hoppet igenkligen 
+ */
+export function jump() {  
     if (jumping && char_y <= H/2+H/16) {
         jump_time += deltaTime
         return -10 + 10 * jump_time / 700
@@ -153,14 +156,23 @@ export function jump() {  // functionen för att hoppa;)
     }
     return 0
 }
-
-export function updateCharacter(x: number, y: number, hitbox: Hitbox) { // function för att uppdatera hitbosen till karaktären
+/**
+ * function för att uppdatera hitboxen till karaktären
+ * @param x hitboxens x värde
+ * @param y hitboxens y värde
+ * @param hitbox vilken hitbox 
+ */
+export function updateCharacter(x: number, y: number, hitbox: Hitbox) { 
     rectangle(x, y, 100, 100)
     hitbox.x = x
     hitbox.y = y
    
 }
-export function walk() {// functionen för att karaktären ska kunna röra sig
+/**
+ * functionen för att karaktären ska kunna röra sig
+ * @returns en variabel för hur snabbt man ska hoppa
+ */
+export function walk() {
     if (keyboard.a && !jumping) {
         return -5
     } else if (keyboard.d && !jumping) {
@@ -175,8 +187,10 @@ export function walk() {// functionen för att karaktären ska kunna röra sig
         return 0
     }
 }
-
-export function updateMovement() {// en till function för rörelsen
+/**
+ * en till function för rörelsen
+ */
+export function updateMovement() {
     movement_x = walk()
     movement_y = jump()
     if (keyboard.w) {
@@ -184,8 +198,10 @@ export function updateMovement() {// en till function för rörelsen
         boingljudet.play();
     }
 }
- 
-export function updatePosition() {// en till function för rörelsen
+ /**
+  * en till function för rörelsen
+  */
+export function updatePosition() {
     if(char_x+movement_x>-50 && char_x+movement_x<W-50){
     char_x += movement_x
     }
@@ -193,7 +209,10 @@ export function updatePosition() {// en till function för rörelsen
 }
  
 let framme = false 
-export function lukazattack(){ // function som får huvudet med lazer att funka
+/**function som får huvudet med lazer att funka
+ * 
+ */
+export function lukazattack(){ 
     if(uppner<201 && framme == false ){
         uppner+=1
         tid2=0
@@ -229,7 +248,13 @@ export function lukazattack(){ // function som får huvudet med lazer att funka
     }
 }
 let vänster = true
-export async function marrekuben(speed: number,x2: number){// function som får kuben med marvins ansikte att röra på sig åt höger och vänsster
+/**
+ * function som får kuben med marvins ansikte att röra på sig åt höger och vänsster
+ * @param speed 
+ * @param x2 
+ * @returns 
+ */
+export async function marrekuben(speed: number,x2: number){
  
    
     let hitboxkub = new Hitbox(W-x4,H/2+H/17,100,100)
@@ -270,7 +295,11 @@ export async function marrekuben(speed: number,x2: number){// function som får 
 
 
 let womanv = true
-export function woman(woman,){ // function som får tjejerna i ippe boss att röra sig
+/**
+ * function som får tjejerna i ippe boss att röra sig
+ * @param woman en lista med värden för hur woman ska röra sig
+ */
+export function woman(woman,){ 
    let hitboxwoman = new Hitbox(woman.x,woman.y,75,200)
    hitboxwoman.x = woman.x
    hitboxwoman.y = woman.y
@@ -301,7 +330,11 @@ export function woman(woman,){ // function som får tjejerna i ippe boss att rö
     död2 = true
 }
 }
-export function woman9(woman){// function som får tjejerna i ippe boss att röra sig 
+/**
+ * function som får tjejerna i ippe boss att röra sig
+ * @param woman en lista med värden för hur woman ska röra sig
+ */
+export function woman9(woman){
     let hitboxwoman = new Hitbox(woman.x,woman.y,75,200)
     hitboxwoman.x = woman.x
     hitboxwoman.y = woman.y
@@ -332,7 +365,10 @@ export function woman9(woman){// function som får tjejerna i ippe boss att rör
      död2 = true
  }
  }
-export function reset(){// function som nollställer alla vairabler den dess första posetion
+ /**
+  * function som nollställer alla vairabler den dess första posetion
+  */
+export function reset(){
      char_x = 100
      randombred = random(100,W-100)
      uppner = 0
@@ -356,7 +392,12 @@ export function reset(){// function som nollställer alla vairabler den dess fö
  
  
 }
- export function ippeboss1(bana){ // en dell av bossen med isak
+/**
+ * function som nollställer alla vairabler den dess första posetion
+ * @param bana varibel för vilken bana de är
+ * @returns uppdaterar vilken bana de är
+ */
+ export function ippeboss1(bana){ 
    
     ctx.drawImage(ippebosse, W/6,h,W-W/3,150)
     if(h<2){
@@ -367,8 +408,12 @@ export function reset(){// function som nollställer alla vairabler den dess fö
     bana = 5
        }   return bana
  }
- 
-export function ippeboss(bana: number){// en dell av bossen med isak
+ /**
+  *  en dell av bossen med isak den som kallar på allt
+  * @param bana uppdaterar bana
+  * @returns uppdaterar vilken bana de är
+  */
+export function ippeboss(bana: number){
    
    
     let hitboxippe = new Hitbox(W/6,1,W-W/3,150)
@@ -397,10 +442,13 @@ export function ippeboss(bana: number){// en dell av bossen med isak
 
     }
     ctx.drawImage(ippebosse, W/6,1,W-W/3,150)
-   
+    return bana
 }
- 
-export function ippetomat(ippe,){//  tomaterna från bossen med isak
+ /**
+  * tomaterna från bossen med isak
+  * @param ippe en lista med värden för hur tomaterna ska röra sig
+  */
+export function ippetomat(ippe,){
     ctx.drawImage(tomat, ippe.x,ippe.y,25,25)
 if (ippe.y>H){
         ippe.y = 1
@@ -418,7 +466,13 @@ if (ippe.y>H){
         död2 = true
     }
 }
- 
+ /**
+  * pengarna det är samma för coins 1, 2 och 3
+  * @param x x värdet för coinsen
+  * @param y y värdet för coinsen
+  * @param coinvalue hur många coins man samlat på sig
+  * @returns returnerar nivarande coinvalue 
+  */
 export function coins1(x: number, y: number,coinvalue){ // pengarna
     ctx.drawImage(coin, x, y,50,60)
     let coinhb = new Hitbox(x,y,50,60)
@@ -447,8 +501,12 @@ export function coins3(x: number, y: number,coinvalue){// pengarna
  
 let lukazlazer = new Hitbox(W-randombred+28, 125,37,H)
 export let lukazhb = new Hitbox(W-randombred,H-H-200+uppner,100,200)
- 
-export function death1(bana): number{ //döds skräm och reset
+ /**
+  * döds skräm och reset
+  * @param bana frågar vilken bana det är just nu
+  * @returns returnerar den bana som man ska starta på
+  */
+export function death1(bana): number{ 
     rectangle(0,0,10000,10000)
     text('WASTED', W - W / 2 - 475, 400, 300, 'red')
     text('Press Enter to restart', W  - 375, H-30, 25, 'red')
@@ -461,6 +519,11 @@ export function death1(bana): number{ //döds skräm och reset
     return bana
     
 }
+/**
+  * döds skräm och reset
+  * @param bana frågar vilken bana det är just nu
+  * @returns returnerar den bana som man ska starta på
+  */
 export function death2(bana): number{//döds skräm och reset och reset point
     rectangle(0,0,10000,10000)
     text('WASTED', W - W / 2 - 475, 400, 300, 'red')
@@ -473,7 +536,10 @@ export function death2(bana): number{//döds skräm och reset och reset point
     }
     return bana
 }
-export function win(){// vinst skärmen
+/**
+ * vinst skärmen
+ */
+export function win(){
     vinstljudet.play();
     text('victory', W - W / 2 - 550, 400, 300, 'yellow')
     
