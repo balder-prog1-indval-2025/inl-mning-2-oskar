@@ -25,6 +25,7 @@ let coinvalue = 0
 
 let bana = 1
 
+
 update = () => {
     getDöd1()
     if (död1){
@@ -75,7 +76,7 @@ update = () => {
         
         
     }
-    if(bana == 2){
+   else if(bana == 2){
         
     
         
@@ -117,7 +118,7 @@ update = () => {
         }
     }
     
-    if(bana == 3){
+   else  if(bana == 3){
            ctx.drawImage(lukazmonster, W-randombred,H-H-200+uppner,100,200)
            
            
@@ -184,7 +185,7 @@ update = () => {
      
      
      
-     if(bana == 5){
+     else if(bana == 5){
          
          
          updateMovement()
@@ -197,7 +198,7 @@ update = () => {
         }
         
         
-     if(bana == 6){
+     else if(bana == 6){
         
         updateMovement()
            updatePosition()
