@@ -1,60 +1,221 @@
-let char_x = 100
-let char_y = 400
-let movement_x = 0
-let movement_y = 0
-let jump_time = 0
-let jumping = false
-let hitbox = new Hitbox(char_x, char_y, 100, 100)
+import { updateCharacter,updatePosition } from "./app2"
+import { lukazattack } from "./app2"
+import { marrekuben } from "./app2"
+import { reset } from "./app2"
+import { ippeboss1,ippeboss } from "./app2"
+import { coins1,coins2,coins3 } from "./app2"
+import { death1,death2 } from "./app2"
+import { win } from "./app2"
+import {  hitbox } from "./app2"
+import {  lukazhb} from "./app2"
+import {  randombred } from "./app2"
+import {  uppner } from "./app2"
+import {  x4} from "./app2"
+import {  char_y, char_x} from "./app2"
+import {  updateMovement,död1, getDöd1,död2 } from "./app2"
+//app.ts har uppdaten och det som driver spelet
 
-function updateCharacter(x: number, y: number, hitbox: Hitbox) {
-    rectangle(x, y, 100, 100)
-    hitbox.x = x
-    hitbox.y = y
-    hitbox.drawOutline("red")
-}
+let deathtimer = 0
+let lukazmonster = await fetchImage ("lukaz.jpg")
+let coinvalue = 0
 
-function jump() {
-    if (jumping && char_y <= 400) {
-        jump_time += deltaTime
-        return -10 + 10 * jump_time / 1000
-    } else if (char_y > 400) {
-        jumping = false
-        char_y = 400
-        jump_time = 0
-        return 0
-    }
-    return 0
-}
 
-function walk() {
-    if (keyboard.a && !jumping) {
-        return -5
-    } else if (keyboard.d && !jumping) {
-        return 5
-    } else if (jumping) {
-        return movement_x
-    } else if (movement_x < -0.1) {
-        return movement_x + 0.2
-    } else if (movement_x > 0.1) {
-        return movement_x - 0.2
-    } else {
-        return 0
-    }
-}
 
-function updatePosition() {
-    char_x += movement_x
-    char_y += movement_y
-}
+
+
+let bana = 1
+
 
 update = () => {
-    clear()
-    movement_x = walk()
-    movement_y = jump()
-    if (keyboard.space) {
-        jumping = true
+    getDöd1()
+    if (död1){
+        bana = death1(bana)
+        coinvalue = 0
+    }else{
+        clear()
+        if(bana == 1){
+            deathtimer = 0
+            
+            
+            ctx.drawImage(lukazmonster, W-randombred,H-H-200+uppner,100,200)
+            
+            
+            updateMovement()
+            
+            if( död1 == false){
+               lukazattack()
+               marrekuben(2,W+x4)
+                
+            }
+            
+            updatePosition()
+            updateCharacter(char_x, char_y, hitbox)
+            
+            
+            lukazhb.y = uppner-200
+            if(keyboard.l){
+                }
+
+            if(coinvalue == 0){
+                coinvalue = coins1(W/4,H/2,coinvalue)
+            }
+            if(coinvalue == 1){
+                coinvalue = coins2(W-W/4,H/5,coinvalue)
+            }
+            if(coinvalue == 2){
+                coinvalue = coins3(W/2,H/3,coinvalue)
+            }
+            if(coinvalue == 3){
+                
+                coinvalue = 4
+                bana = 2 
+                
+         
+         
+        }
+        
+        
+    }
+   else if(bana == 2){
+        
+    
+        
+        ctx.drawImage(lukazmonster, W-randombred,H-H-200+uppner,100,200)
+        
+        
+        updateMovement()
+        
+        if( död1 == false){
+            lukazattack()
+            marrekuben(4,W/2)
+            
+        }
+        
+        updatePosition()
+        updateCharacter(char_x, char_y, hitbox)
+        
+        
+        lukazhb.y = uppner-200
+        
+        
+        if(coinvalue == 0){
+           coinvalue = coins1(W/4,H/2,coinvalue)
+        }
+        if(coinvalue == 1){
+            coinvalue = coins2(W-W/9,H/5,coinvalue)
+        }
+        if(coinvalue == 2){
+            coinvalue = coins3(W/6,H/4,coinvalue)
+        }
+        if(coinvalue == 3){
+            bana = 3
+            coinvalue = 4
+        }
+        if(coinvalue == 4){
+            coinvalue = 0
+            
+            
+        }
+    }
+    
+   else  if(bana == 3){
+           ctx.drawImage(lukazmonster, W-randombred,H-H-200+uppner,100,200)
+           
+           
+           updateMovement()
+           
+            if( död1 == false){
+                lukazattack()
+                
+                marrekuben(10,W/2)
+                
+            }
+            
+            updatePosition()
+            updateCharacter(char_x, char_y, hitbox)
+            
+            
+            lukazhb.y = uppner-200
+            if(keyboard.l){
+
+       
+       }
+       if(coinvalue == 0){
+        coinvalue = coins1(W/4,H/2,coinvalue)
+     }
+     if(coinvalue == 1){
+        coinvalue = coins2(W-W/9,H/5,coinvalue)
+     }
+     if(coinvalue == 2){
+        coinvalue = coins3(W/6,H/4,coinvalue)
+     }
+     if(coinvalue == 3){
+        reset()
+        coinvalue = 4
+             bana = 4
+   
+     
+       
+    }
+       if(coinvalue == 4){
+           
+       coinvalue = 0
+ 
+       }
+ 
+       }
+    if (död2){
+        bana = death2(bana) 
+        
+    }else{
+ 
+     if (bana==4){
+        
+        
+        updateMovement()
+        updatePosition()
+        updateCharacter(char_x, char_y, hitbox)
+        
+        bana = ippeboss1(bana)
+        
+ 
+     }
+
+     
+     
+     
+     
+     else if(bana == 5){
+         
+         
+         updateMovement()
+            updatePosition()
+            updateCharacter(char_x, char_y, hitbox)
+            if( död1 == false){
+                ippeboss(bana)
+            }
+            
+        }
+        
+        
+     else if(bana == 6){
+        
+        updateMovement()
+           updatePosition()
+           updateCharacter(char_x, char_y, hitbox)
+           if( död1 == false){
+               win()
+           }
+
+     }
+
+
+    }
+       }
     }
 
-    updatePosition()
-    updateCharacter(char_x, char_y, hitbox)
-}
+ 
+ 
+   
+ 
+export { }
